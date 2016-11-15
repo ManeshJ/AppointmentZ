@@ -73,7 +73,7 @@
                         		
                             </div>
                             <div class="form-bottom">
-			                    <form role="form" action="./addSession" method="POST" class="login-form">
+			                    <form role="form" action="./addSession" method="POST" class="login-form" enctype="multipart/form-data">
 			                    	<div class="form-group">
 										<div class="dropdown">
 											
@@ -162,6 +162,11 @@
 												<input type="hidden" id="dtp_input3" value="" />
 												</center>
 											</div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="file"></label>
+                                                <p>Auth code:</p>
+                                                <input type="file" name="file" class="form-password form-control" id="file">
+                                            </div>
 											<!--<div class="form-group">
 												<center>
 												<p style="color:white">Pick End time</p>

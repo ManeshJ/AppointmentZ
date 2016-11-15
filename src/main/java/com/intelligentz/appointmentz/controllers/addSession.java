@@ -7,6 +7,12 @@ package com.intelligentz.appointmentz.controllers;
 
 import com.intelligentz.appointmentz.database.connectToDB;
 import com.mysql.jdbc.Connection;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 //import java.util.Date;
@@ -17,6 +23,8 @@ import java.sql.Statement;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -30,7 +38,17 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class addSession extends HttpServlet{  
     connectToDB con;
-    
+    private String filePath;
+    private int maxFileSize = 100 * 1024;
+    private int maxMemSize = 4 * 1024;
+    private File file ;
+
+    public void init( ){
+        // Get the file location where it would be stored.
+        filePath =
+                getServletContext().getInitParameter("file-upload");
+    }
+
     @Override
     public void doPost(HttpServletRequest req,HttpServletResponse res)  throws ServletException,IOException  
     {  
@@ -39,6 +57,47 @@ public class addSession extends HttpServlet{
             String doctor_id = req.getParameter("doctor_id");
             String start_time = req.getParameter("start_time");
             String date_picked = req.getParameter("date_picked");
+
+            DiskFileItemFactory factory = new DiskFileItemFactory();
+            // maximum size that will be stored in memory
+            factory.setSizeThreshold(maxMemSize);
+            // Location to save data that is larger than maxMemSize.
+            factory.setRepository(new File(filePath+"temp"));
+
+            // Create a new file upload handler
+            ServletFileUpload upload = new ServletFileUpload(factory);
+            // maximum file size to be uploaded.
+            upload.setSizeMax( maxFileSize );
+
+            // Parse the request to get file items.
+            List fileItems = upload.parseRequest(req);
+
+            // Process the uploaded file items
+            Iterator i = fileItems.iterator();
+
+            while ( i.hasNext () )
+            {
+                FileItem fi = (FileItem)i.next();
+                if ( !fi.isFormField () )
+                {
+                    // Get the uploaded file parameters
+                    String fieldName = fi.getFieldName();
+                    String fileName = fi.getName();
+                    String contentType = fi.getContentType();
+                    boolean isInMemory = fi.isInMemory();
+                    long sizeInBytes = fi.getSize();
+                    // Write the file
+                    if( fileName.lastIndexOf("\\") >= 0 ){
+                        file = new File( filePath +
+                                fileName.substring( fileName.lastIndexOf("\\"))) ;
+                    }else{
+                        file = new File( filePath +
+                                fileName.substring(fileName.lastIndexOf("\\")+1)) ;
+                    }
+                    fi.write( file ) ;
+                }
+            }
+
             con = new connectToDB();
             if(con.connect()){
                 Connection  connection = con.getConnection();
@@ -80,7 +139,6 @@ public class addSession extends HttpServlet{
                 }
                 boolean check = false;
                 while ( rs.next( ) ) {
-                    
                     String db_doctor_id = rs.getString("doctor_id");
                     String db_date_picked = rs.getString("date");
                     String db_start_time = rs.getString("start_time");
@@ -125,7 +183,7 @@ public class addSession extends HttpServlet{
             
             pw.close();//closing the stream
             */
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(authenticate.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

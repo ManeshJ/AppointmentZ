@@ -44,7 +44,6 @@ public class addBerry extends HttpServlet{
                     preparedStmt.setString (1, room_id);
                     preparedStmt.setString (2, auth);
                     preparedStmt.setString (3, serial);
-
                 // execute the preparedstatement
                 preparedStmt.execute();
                 

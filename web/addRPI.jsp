@@ -69,7 +69,7 @@
                         		</div>
                             </div>
                             <div class="form-bottom">
-			                    <form role="form" action="/addBerry" method="post" class="login-form">
+			                    <form role="form" action="addBerry" method="post" class="login-form">
 									<div class="form-group">
 			                        	<label class="sr-only" for="form-password"></label>
 										<p>Room Number:</p>
