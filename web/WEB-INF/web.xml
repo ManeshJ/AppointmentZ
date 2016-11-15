@@ -3,6 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
     <context-param>
         <description>File Upload Location</description>
         <param-name>file-upload</param-name>
@@ -21,6 +26,102 @@
         <servlet-name>UploadServlet</servlet-name>
         <servlet-class>com.intelligentz.appointmentz.servlet.UploadServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>auth</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.authenticate</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>auth</servlet-name>
+        <url-pattern>/auth</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>home.jsp</servlet-name>
+        <jsp-file>/home.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>home.jsp</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>index.jsp</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>index.jsp</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addDoc</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.addDoc</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addDoc</servlet-name>
+        <url-pattern>/addDoc</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addBerry</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.addBerry</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addBerry</servlet-name>
+        <url-pattern>/addBerry</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addR</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.addR</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addR</servlet-name>
+        <url-pattern>/addR</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addBut</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.addBut</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addBut</servlet-name>
+        <url-pattern>/addBut</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addButton.jsp</servlet-name>
+        <jsp-file>/addButton.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addButton.jsp</servlet-name>
+        <url-pattern>/addButton</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>addRPI.jsp</servlet-name>
+        <jsp-file>/addRPI.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addRPI.jsp</servlet-name>
+        <url-pattern>/addRPI</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addDoctor.jsp</servlet-name>
+        <jsp-file>/addDoctor.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addDoctor.jsp</servlet-name>
+        <url-pattern>/addDoctor</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addRoom.jsp</servlet-name>
+        <jsp-file>/addRoom.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addRoom.jsp</servlet-name>
+        <url-pattern>/addRoom</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/UploadServlet</url-pattern>

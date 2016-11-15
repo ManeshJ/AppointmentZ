@@ -39,7 +39,7 @@ public class SMSHandler {
         outboundSMSMessageRequest.add("address",msisdn);
         outboundSMSMessageRequest.addProperty("senderAddress",senderAddress);
         outboundSMSMessageRequest.add("outboundSMSTextMessage", outboundSMSTextMessage);
-        outboundSMSMessageRequest.addProperty("senderName", senderName);
+        outboundSMSMessageRequest.addProperty("senderName", "");
 
         JsonObject receiptRequest = new JsonObject();
         receiptRequest.addProperty("notifyURL","");
