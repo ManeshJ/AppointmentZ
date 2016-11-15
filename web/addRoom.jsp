@@ -1,3 +1,4 @@
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,8 +39,12 @@
             <div style="position:absolute; right:30px; top:20px;">
                 <button class="btn btn-primary dropdown-toggle" data-target="#demo" data-toggle="collapse" style='color:white'><% out.println(session.getAttribute("hospital_name")); %>
                         </button>
+                        <button class="btn btn-primary" style='color:white' onClick="window.location.assign('home.jsp')">Home
+                </button>
                 <div id="demo" class="collapse">
-                <a href="#">Logout</a>
+                <form action="./logout" method="post">
+                        <input class="btn btn-primary" style="color:red" type="submit" value="Logout" />
+                    </form>
                 </div>
             </div>
             <div class="inner-bg" style="padding-top: 10px">
@@ -48,9 +53,9 @@
                         <div class="col-sm-8 col-sm-offset-2 text">
                             <h1><strong>APPointmentZ</strong> Add Rooms</h1>
                             <div class="description">
-                            	<p>
+                            	<!--<p>
 	                            	Why wait in queues. Do something you like. We will notify you. <a href=""><strong>APPointmentZ.lk</strong></a>, Join with us
-                            	</p>
+                            	</p>-->
                             </div>
                         </div>
                     

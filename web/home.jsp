@@ -37,9 +37,12 @@
         <div class="top-content">
             <div style="position:absolute; right:30px; top:20px;">
                 <button class="btn btn-primary dropdown-toggle" data-target="#demo" data-toggle="collapse" style='color:white'><% out.println(session.getAttribute("hospital_name")); %>
-                        </button>
+                </button>
                 <div id="demo" class="collapse">
-                <a href="#">Logout</a>
+                    <form action="./logout" method="post">
+                        <input class="btn btn-primary" style="color:red" type="submit" value="Logout" />
+                    </form>
+                
                 </div>
             </div>
             <div class="inner-bg" style="padding-top: 10px">
@@ -55,12 +58,6 @@
                         </div>
                         <div class="col-sm-6 col-sm-offset-3 form-box">
                         	<div class="form-top">
-                        		<div class="form-top-left">
-                        			<h3>Add devices</h3>
-                            		<p>Add Dbuttons or RPIs from here:</p>
-                        		</div>
-                        		<div class="form-top-right">
-                        		</div>
                             </div>
                             <div class="form-bottom">
                                             <form role="form" action="./addDoctor" method="post" class="login-form">
@@ -85,6 +82,10 @@
 								<br>
 								<form role="form" action="./sessions" method="post" class="login-form">
 			                        <button type="submit" class="btn"><strong>Sessions</strong></button>
+			                    </form>
+                                                                <br>
+								<form role="form" action="./equipments" method="post" class="login-form">
+			                        <button type="submit" class="btn"><strong>Equipments</strong></button>
 			                    </form>
 								<br>
 		                    </div>
