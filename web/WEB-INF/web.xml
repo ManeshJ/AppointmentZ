@@ -12,7 +12,7 @@
         <description>File Upload Location</description>
         <param-name>file-upload</param-name>
         <!--<param-value>/media/ephemeral0/pdesilva/uploads/</param-value>-->
-        <param-value>/home/lakshan/upload</param-value>
+        <param-value>/home/lakshan/Desktop/upload/</param-value>
     </context-param>
     <servlet>
         <servlet-name>REST API</servlet-name>
@@ -62,6 +62,14 @@
         <url-pattern>/addDoc</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>addSession</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.addSession</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addSession</servlet-name>
+        <url-pattern>/addSession</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>addBerry</servlet-name>
         <servlet-class>com.intelligentz.appointmentz.controllers.addBerry</servlet-class>

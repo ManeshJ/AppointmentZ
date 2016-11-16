@@ -26,8 +26,8 @@ public class ButtonResource {
     public Response get(String request) {
         // TODO: Implementation for HTTP GET request
         JsonObject jsonObject = new JsonParser().parse(request).getAsJsonObject();
-        String serial = "";//request.get("serial").getAsString();
-        String authcode = "";//request.get("auth_code").getAsString();
+        String btn_serial = jsonObject.get("mac").getAsString();//request.get("serial").getAsString();
+        String rpi_auth = "";
         int pin = 26;
 
         Gson gson = new Gson();

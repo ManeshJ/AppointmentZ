@@ -73,7 +73,7 @@
                         		
                             </div>
                             <div class="form-bottom">
-			                    <form role="form" action="./addSession" method="POST" class="login-form" enctype="multipart/form-data">
+			                    <form role="form" action="addSession" method="POST" class="login-form" enctype="multipart/form-data">
 			                    	<div class="form-group">
 										<div class="dropdown">
 											
@@ -165,7 +165,7 @@
                                             <div class="form-group">
                                                 <label class="sr-only" for="file"></label>
                                                 <p>Auth code:</p>
-                                                <input type="file" name="file" class="form-password form-control" id="file">
+                                                <input type="file" name="file" class="form-password form-control btn" id="file">
                                             </div>
 											<!--<div class="form-group">
 												<center>
