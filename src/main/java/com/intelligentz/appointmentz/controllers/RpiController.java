@@ -23,7 +23,7 @@ public class RpiController {
             Connection connection = con.getConnection();
             Class.forName("com.mysql.jdbc.Driver");
             String SQL1;
-            SQL1 = "SELECT * FROM appointmentz.rpi WHERE room_id = ?";
+            SQL1 = "SELECT * FROM db_bro.rpi WHERE room_id = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, roomId);
             ResultSet rs = preparedStmt.executeQuery();
@@ -68,7 +68,7 @@ public class RpiController {
             Connection connection = con.getConnection();
             Class.forName("com.mysql.jdbc.Driver");
             String SQL1;
-            SQL1 = "SELECT * FROM appointmentz.rpi WHERE serial = ?";
+            SQL1 = "SELECT * FROM db_bro.rpi WHERE serial = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, serial);
             ResultSet rs = preparedStmt.executeQuery();
@@ -78,5 +78,12 @@ public class RpiController {
             connection.close();
         }
         return room_id;
+    }
+    public void decreaseRpiCurrentNumber(String serial) throws SQLException, ClassNotFoundException, IdeabizException {
+        String room_id = getRpiRoomId(serial);
+        Rpi rpi = getRpiOfRoom(room_id);
+        int current_no = new SessionController().getCurrentNumberOfRoom(room_id);
+        new SessionController().setCurrentNumberOfRoom(room_id,current_no-1);
+        new RpiHandler().updateRpiPin(rpi.getSerial(),rpi.getAuth(), RpiPinConstants.INTURRUPT_PIN, RpiPinConstants.ACTION_ON);
     }
 }

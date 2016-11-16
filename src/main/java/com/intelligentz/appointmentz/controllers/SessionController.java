@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by lakshan on 11/16/16.
@@ -43,10 +44,12 @@ public class SessionController {
             String SQL1;
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             DateFormat df2 = new SimpleDateFormat("HH:mm:ss");
+            df.setTimeZone(TimeZone.getTimeZone("GMT+5:30"));
+            df2.setTimeZone(TimeZone.getTimeZone("GMT+5:30"));
             Date dateobj = new Date();
             String dateRep = df.format(dateobj);
             String timeRep = df2.format(dateobj);
-            SQL1 = "SELECT * FROM appointmentz.session WHERE doctor_id = ? AND `date` = '"+dateRep+"' AND start_time < '"+timeRep+"' ORDER BY start_time DESC LIMIT 1";
+            SQL1 = "SELECT * FROM db_bro.session WHERE doctor_id = ? AND `date` = '"+dateRep+"' AND start_time < '"+timeRep+"' ORDER BY start_time DESC LIMIT 1";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, doctor.getDoctor_id());
             ResultSet rs = preparedStmt.executeQuery();
@@ -74,10 +77,12 @@ public class SessionController {
             String SQL1;
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             DateFormat df2 = new SimpleDateFormat("HH:mm:ss");
+            df.setTimeZone(TimeZone.getTimeZone("GMT+5:30"));
+            df2.setTimeZone(TimeZone.getTimeZone("GMT+5:30"));
             Date dateobj = new Date();
             String dateRep = df.format(dateobj);
             String timeRep = df2.format(dateobj);
-            SQL1 = "SELECT * FROM appointmentz.session WHERE room_id = ? AND `date` = '"+dateRep+"' AND start_time < '"+timeRep+"' ORDER BY start_time DESC LIMIT 1";
+            SQL1 = "SELECT * FROM db_bro.session WHERE room_id = ? AND `date` = '"+dateRep+"' AND start_time < '"+timeRep+"' ORDER BY start_time DESC LIMIT 1";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, room_id);
             ResultSet rs = preparedStmt.executeQuery();
@@ -98,10 +103,12 @@ public class SessionController {
             String SQL1;
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             DateFormat df2 = new SimpleDateFormat("HH:mm:ss");
+            df.setTimeZone(TimeZone.getTimeZone("GMT+5:30"));
+            df2.setTimeZone(TimeZone.getTimeZone("GMT+5:30"));
             Date dateobj = new Date();
             String dateRep = df.format(dateobj);
             String timeRep = df2.format(dateobj);
-            SQL1 = "SELECT * FROM appointmentz.session WHERE room_id = ? AND `date` = '"+dateRep+"' AND start_time < '"+timeRep+"' ORDER BY start_time DESC LIMIT 1";
+            SQL1 = "SELECT * FROM db_bro.session WHERE room_id = ? AND `date` = '"+dateRep+"' AND start_time < '"+timeRep+"' ORDER BY start_time DESC LIMIT 1";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, room_id);
             ResultSet rs = preparedStmt.executeQuery();
@@ -119,15 +126,37 @@ public class SessionController {
             Connection connection = con.getConnection();
             Class.forName("com.mysql.jdbc.Driver");
             String SQL1;
-            SQL1 = "UPDATE appointmentz.session SET current_no = ? WHERE  session_id = ?";
+            SQL1 = "UPDATE db_bro.session SET current_no = ? WHERE  session_id = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setInt(1, newNumber);
             preparedStmt.setString(2, session_id);
-            preparedStmt.execute(SQL1);
+            preparedStmt.execute();
             connection.close();
         }
     }
-
+//    public String getCurrentNumberOfRoom(String room_id) throws ClassNotFoundException, SQLException {
+//        String session_id = null;
+//        con = new connectToDB();
+//        if(con.connect()) {
+//            Connection connection = con.getConnection();
+//            Class.forName("com.mysql.jdbc.Driver");
+//            String SQL1;
+//            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//            DateFormat df2 = new SimpleDateFormat("HH:mm:ss");
+//            Date dateobj = new Date();
+//            String dateRep = df.format(dateobj);
+//            String timeRep = df2.format(dateobj);
+//            SQL1 = "SELECT * FROM appointmentz.session WHERE room_id = ? AND `date` = '"+dateRep+"' AND start_time < '"+timeRep+"' ORDER BY start_time DESC LIMIT 1";
+//            PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
+//            preparedStmt.setString(1, room_id);
+//            ResultSet rs = preparedStmt.executeQuery();
+//            if (rs.next()) {
+//                session_id = rs.getString("current_no");
+//            }
+//            connection.close();
+//        }
+//        return session_id;
+//    }
 
     public void increaseSessionNumber(Session session) throws SQLException, ClassNotFoundException, IdeabizException {
         updateCurrentNumber(session.getSession_id(),session.getCurrent_no()+1);
@@ -137,7 +166,4 @@ public class SessionController {
     public void decreaseSessionNumber(String sessionId, int currentNumber) throws SQLException, ClassNotFoundException {
         updateCurrentNumber(sessionId,currentNumber-1);
     }
-
-
-
 }

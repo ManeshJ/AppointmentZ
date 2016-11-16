@@ -23,7 +23,7 @@ public class DoctorController {
             Connection connection = con.getConnection();
             Class.forName("com.mysql.jdbc.Driver");
             String SQL1;
-            SQL1 = "SELECT * FROM appointmentz.doctor WHERE doctor_id = ?";
+            SQL1 = "SELECT * FROM db_bro.doctor WHERE doctor_id = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, doctorId);
             ResultSet rs = preparedStmt.executeQuery();

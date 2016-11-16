@@ -20,7 +20,7 @@ public class ButtonController {
             Connection connection = con.getConnection();
             Class.forName("com.mysql.jdbc.Driver");
             String SQL1;
-            SQL1 = "SELECT * FROM appointmentz.button WHERE serial = ?";
+            SQL1 = "SELECT * FROM db_bro.button WHERE serial = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, serial);
             ResultSet rs = preparedStmt.executeQuery();

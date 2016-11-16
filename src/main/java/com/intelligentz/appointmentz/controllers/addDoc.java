@@ -38,7 +38,7 @@ public class addDoc extends HttpServlet{
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( ); 
                 String SQL,SQL1;
-                SQL1 = "insert into appointmentz.doctor ( hospital_id, name) VALUES (?,?)";
+                SQL1 = "insert into db_bro.doctor ( hospital_id, name) VALUES (?,?)";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
                     preparedStmt.setString (1, hospital_id);
                     preparedStmt.setString (2, doctor_name);
@@ -46,7 +46,7 @@ public class addDoc extends HttpServlet{
                 // execute the preparedstatement
                 preparedStmt.execute();
                 
-                SQL = "select * from appointmentz.doctor"; 
+                SQL = "select * from db_bro.doctor";
                 ResultSet rs = stmt.executeQuery(SQL);
                 
                 if(rs.wasNull()){

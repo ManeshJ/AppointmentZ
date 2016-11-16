@@ -21,7 +21,7 @@ public class HospitalController {
             Connection connection = con.getConnection();
             Class.forName("com.mysql.jdbc.Driver");
             String SQL1;
-            SQL1 = "SELECT hospital_name FROM appointmentz.hospital WHERE hospital_id = ?";
+            SQL1 = "SELECT hospital_name FROM db_bro.hospital WHERE hospital_id = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, hospitalId);
             ResultSet rs = preparedStmt.executeQuery();

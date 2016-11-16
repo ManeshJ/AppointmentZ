@@ -43,7 +43,7 @@ public class updateSession extends HttpServlet{
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( );
                 String SQL,SQL1;
-                SQL1 = "update appointmentz.session set room_id = ? where session_id = ?";
+                SQL1 = "update db_bro.session set room_id = ? where session_id = ?";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
                     preparedStmt.setString (2, session_id);
                     preparedStmt.setString (1, room_id);
@@ -53,7 +53,7 @@ public class updateSession extends HttpServlet{
                 // execute the preparedstatement
                 preparedStmt.execute();
                 
-                SQL = "select * from appointmentz.session"; 
+                SQL = "select * from db_bro.session";
                 ResultSet rs = stmt.executeQuery(SQL);
                 
                 if(rs.wasNull()){

@@ -11,8 +11,8 @@
     <context-param>
         <description>File Upload Location</description>
         <param-name>file-upload</param-name>
-        <!--<param-value>/media/ephemeral0/pdesilva/uploads/</param-value>-->
-        <param-value>/home/lakshan/Desktop/upload/</param-value>
+        <param-value>/media/ephemeral0/pdesilva/uploads/</param-value>
+        <!--<param-value>/home/lakshan/Desktop/upload/</param-value>-->
     </context-param>
     <servlet>
         <servlet-name>REST API</servlet-name>

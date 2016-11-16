@@ -32,7 +32,7 @@ public class authenticate extends HttpServlet{
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( ); 
                 String SQL;
-                SQL = "select * from appointmentz.hospital";
+                SQL = "select * from db_bro.hospital";
                  //WHERE hospital_id=\""+username+"\" AND password=\""+password+"\"";
                 ResultSet rs = stmt.executeQuery(SQL);
                 if(rs.wasNull()){

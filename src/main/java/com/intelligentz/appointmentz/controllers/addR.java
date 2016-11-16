@@ -45,7 +45,7 @@ public class addR extends HttpServlet{
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( ); 
                 String SQL,SQL1;
-                SQL1 = "insert into appointmentz.room ( hospital_id, room_number) VALUES (?,?)";
+                SQL1 = "insert into db_bro.room ( hospital_id, room_number) VALUES (?,?)";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
                     preparedStmt.setString (1, hospital_id);
                     preparedStmt.setString (2, room_number);
@@ -53,7 +53,7 @@ public class addR extends HttpServlet{
                 // execute the preparedstatement
                 preparedStmt.execute();
                 
-                SQL = "select * from appointmentz.room"; 
+                SQL = "select * from db_bro.room";
                 ResultSet rs = stmt.executeQuery(SQL);
                 
                 if(rs.wasNull()){

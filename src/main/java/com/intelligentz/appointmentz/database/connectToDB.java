@@ -26,9 +26,9 @@ final public class connectToDB {
     private Connection connection;
     
     public connectToDB() throws ClassNotFoundException{
-        url = "jdbc:mysql://localhost:3306/appointmentz";
-        username = "root";
-        password = "luckygrox";
+        url = "jdbc:mysql://localhost:3306/db_bro";
+        username = "pdesilva";
+        password = "6935!LVa";
         Class.forName("com.mysql.jdbc.Driver");
     }
     public boolean connect(){

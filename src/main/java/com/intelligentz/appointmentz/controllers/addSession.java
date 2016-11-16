@@ -6,6 +6,7 @@
 package com.intelligentz.appointmentz.controllers;
 
 import com.intelligentz.appointmentz.database.connectToDB;
+import com.intelligentz.appointmentz.model.SessonCustomer;
 import com.mysql.jdbc.Connection;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -17,11 +18,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 //import java.util.Date;
+import java.net.InterfaceAddress;
 import java.net.URI;
 import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
@@ -32,6 +35,7 @@ import java.sql.Statement;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -69,7 +73,7 @@ public class addSession extends HttpServlet{
             String doctor_id = null;
             String start_time = null;
             String date_picked = null;
-            Map<String,String> custMap = new HashMap<>();
+            ArrayList<SessonCustomer> sessonCustomers = new ArrayList<>();
             DiskFileItemFactory factory = new DiskFileItemFactory();
             // maximum size that will be stored in memory
             factory.setSizeThreshold(maxMemSize);
@@ -107,9 +111,9 @@ public class addSession extends HttpServlet{
                         file = new File(filePath) ;
                     }
                     fi.write( file ) ;
-                    Files.lines(file.toPath()).forEach((line) -> {
+                    Files.lines(Paths.get(filePath)).forEach((line) -> {
                         String[] cust = line.split(",");
-                        custMap.put(cust[0],cust[1]);
+                        sessonCustomers.add(new SessonCustomer(cust[0], Integer.parseInt(cust[1])));
                     });
                 }else{
                     if (fi.getFieldName().equals("room_id")) room_id = fi.getString();
@@ -125,7 +129,7 @@ public class addSession extends HttpServlet{
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( ); 
                 String SQL,SQL1, SQL2;
-                SQL1 = "insert into appointmentz.session ( doctor_id, room_id, date, start_time) VALUES (?,?,?,?)";
+                SQL1 = "insert into db_bro.session ( doctor_id, room_id, date, start_time) VALUES (?,?,?,?)";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
                 preparedStmt.setString (1, doctor_id);
                 preparedStmt.setString (2, room_id);
@@ -152,12 +156,9 @@ public class addSession extends HttpServlet{
                 // execute the preparedstatement
                 preparedStmt.execute();
 
-                SQL = "select * from appointmentz.session ORDER BY session_id DESC limit 1";
+                SQL = "select * from db_bro.session ORDER BY session_id DESC limit 1";
                 ResultSet rs = stmt.executeQuery(SQL);
 
-                if(rs.wasNull()){
-                    displayMessage(res,"response in null");
-                }
                 boolean check = false;
                 while ( rs.next( ) ) {
                     String db_doctor_id = rs.getString("doctor_id");
@@ -168,12 +169,12 @@ public class addSession extends HttpServlet{
                     if((doctor_id == null ? db_doctor_id == null : doctor_id.equals(db_doctor_id)) && (start_time == null ? db_start_time == null : (start_time+":00").equals(db_start_time)) && (room_id == null ? db_room_id == null : room_id.equals(db_room_id)) && (date_picked == null ? db_date_picked == null : date_picked.equals(db_date_picked))){
                         check=true;
                         //displayMessage(res,"Authentication Success!");
-                        SQL2 = "insert into appointmentz.session_customers ( session_id, mobile, appointment_num) VALUES (?,?,?)";
-                        for (Map.Entry<String,String> entry: custMap.entrySet()) {
+                        SQL2 = "insert into db_bro.session_customers ( session_id, mobile, appointment_num) VALUES (?,?,?)";
+                        for (SessonCustomer sessonCustomer: sessonCustomers) {
                             preparedStmt = connection.prepareStatement(SQL2);
                             preparedStmt.setString (1, rs.getString("session_id"));
-                            preparedStmt.setString (2, entry.getKey());
-                            preparedStmt.setString (3, entry.getValue());
+                            preparedStmt.setString (2, sessonCustomer.getMobile());
+                            preparedStmt.setInt (3, sessonCustomer.getAppointment_num());
                             preparedStmt.execute();
                         }
                             try {

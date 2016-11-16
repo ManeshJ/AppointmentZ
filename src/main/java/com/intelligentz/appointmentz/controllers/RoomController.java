@@ -21,7 +21,7 @@ public class RoomController {
             Connection connection = con.getConnection();
             Class.forName("com.mysql.jdbc.Driver");
             String SQL1;
-            SQL1 = "SELECT * FROM appointmentz.room WHERE room_id = ?";
+            SQL1 = "SELECT * FROM db_bro.room WHERE room_id = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, roomId);
             ResultSet rs = preparedStmt.executeQuery();

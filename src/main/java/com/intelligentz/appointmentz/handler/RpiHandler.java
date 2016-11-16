@@ -14,6 +14,7 @@ public class RpiHandler {
         String body = "{\n" +
                 "\"serial\": \""+serial+"_"+String.valueOf(pin)+"\", \"auth_code\": \""+authcode+"\" , \"action\":\""+action+"\"\n" +
                 "}";
-        return new IdeaBizAPIHandler().sendAPICall(URLs.CONNECTED_DEVICE_URL, RequestMethod.POST,body,"", ContentTypes.TYPE_JSON, ContentTypes.TYPE_JSON, AuthorizationTypes.TYPE_BEARER);
+        System.out.println(body);
+        return new IdeaBizAPIHandler().sendAPICall(URLs.CONNECTED_DEVICE_URL, RequestMethod.POST,body,"", ContentTypes.TYPE_JSON, ContentTypes.TYPE_TEXT, AuthorizationTypes.TYPE_BEARER);
     }
 }

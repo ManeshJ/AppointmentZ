@@ -84,7 +84,7 @@
                                                                     if(con.connect()){
                                                                         Connection connection = con.getConnection();
                                                                         Statement stmt = connection.createStatement( );
-                                                                        String SQL = "select room_number,room_id from appointmentz.room";
+                                                                        String SQL = "select room_number,room_id from db_bro.room";
                                                                         ResultSet rs = stmt.executeQuery( SQL );
 
                                                                         while(rs.next( )){

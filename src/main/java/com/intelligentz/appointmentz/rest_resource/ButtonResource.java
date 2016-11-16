@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import com.intelligentz.appointmentz.controllers.RpiController;
 import com.intelligentz.appointmentz.controllers.SessionController;
 import com.intelligentz.appointmentz.exception.IdeabizException;
+import com.intelligentz.appointmentz.model.Rpi;
 import com.intelligentz.appointmentz.model.Session;
 
 import javax.ws.rs.*;
@@ -20,10 +21,9 @@ import java.sql.SQLException;
 public class ButtonResource {
 
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
     @POST
-    @Path("/yesButton")
-    public Response get(String request) {
+    @Path("/noButton")
+    public void get(String request) {
         // TODO: Implementation for HTTP GET request
         JsonObject jsonObject = new JsonParser().parse(request).getAsJsonObject();
         String btn_serial = jsonObject.get("mac").getAsString();
@@ -45,7 +45,7 @@ public class ButtonResource {
 //        } catch (IdeaBizException e) {
 //            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 //        }
-        return Response.status(Response.Status.OK).build();
+        //return Response.status(Response.Status.OK).build();
     }
 
     @Produces(MediaType.TEXT_PLAIN)
@@ -77,5 +77,38 @@ public class ButtonResource {
             e.printStackTrace();
         }
         return "reset";
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    @Path("/reset")
+    public String pollget2() {
+        String serial = "00000000bca6972a";
+        try {
+            new RpiController().setRpiCurrentNumber(serial,0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IdeabizException e) {
+            e.printStackTrace();
+        }
+        return "reset";
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    @Path("/yesButton")
+    public void pollget() {
+        String serial = "00000000bca6972a";
+        try {
+            new RpiController().decreaseRpiCurrentNumber(serial);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IdeabizException e) {
+            e.printStackTrace();
+        }
     }
 }

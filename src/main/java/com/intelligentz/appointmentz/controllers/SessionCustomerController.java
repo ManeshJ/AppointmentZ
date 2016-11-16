@@ -22,7 +22,7 @@ public class SessionCustomerController {
             Connection connection = con.getConnection();
             Class.forName("com.mysql.jdbc.Driver");
             String SQL1;
-            SQL1 = "SELECT * FROM appointmentz.session_customers WHERE session_id = ? AND appointment_num > ? AND appointment_num <= ?";
+            SQL1 = "SELECT * FROM db_bro.session_customers WHERE session_id = ? AND appointment_num > ? AND appointment_num <= ?";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, sessionId);
             preparedStmt.setInt(2, currentNumer);

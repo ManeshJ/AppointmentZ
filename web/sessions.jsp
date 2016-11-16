@@ -75,7 +75,7 @@
                                                                     if(con.connect()){
                                                                         Connection connection = con.getConnection();
                                                                         Statement stmt = connection.createStatement( );
-                                                                        String SQL = "select * from appointmentz.session natural join doctor natural join room";
+                                                                        String SQL = "select * from db_bro.session natural join doctor natural join room";
                                                                         ResultSet rs = stmt.executeQuery( SQL );
 
                                                                         while(rs.next( )){

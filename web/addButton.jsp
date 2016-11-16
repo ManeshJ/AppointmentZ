@@ -89,7 +89,7 @@
                                                                     if(con.connect()){
                                                                         Connection connection = con.getConnection();
                                                                         Statement stmt = connection.createStatement( );
-                                                                        String SQL = "select name,doctor_id from appointmentz.doctor";
+                                                                        String SQL = "select name,doctor_id from db_bro.doctor";
                                                                         ResultSet rs = stmt.executeQuery( SQL );
 
                                                                         while(rs.next( )){

@@ -39,7 +39,7 @@ public class addBerry extends HttpServlet{
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( ); 
                 String SQL,SQL1;
-                SQL1 = "insert into appointmentz.rpi ( room_id, auth, serial) VALUES (?,?,?)";
+                SQL1 = "insert into db_bro.rpi ( room_id, auth, serial) VALUES (?,?,?)";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
                     preparedStmt.setString (1, room_id);
                     preparedStmt.setString (2, auth);
@@ -47,7 +47,7 @@ public class addBerry extends HttpServlet{
                 // execute the preparedstatement
                 preparedStmt.execute();
 
-                SQL = "select * from appointmentz.rpi"; 
+                SQL = "select * from db_bro.rpi";
                 ResultSet rs = stmt.executeQuery(SQL);
                 
                 if(rs.wasNull()){
