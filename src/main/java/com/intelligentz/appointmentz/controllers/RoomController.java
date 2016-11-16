@@ -24,7 +24,7 @@ public class RoomController {
             SQL1 = "SELECT * FROM appointmentz.room WHERE room_id = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, roomId);
-            ResultSet rs = preparedStmt.executeQuery(SQL1);
+            ResultSet rs = preparedStmt.executeQuery();
             if (rs.next()) {
                 String room_number = rs.getString("room_number");
                 room = new Room(room_number,roomId);

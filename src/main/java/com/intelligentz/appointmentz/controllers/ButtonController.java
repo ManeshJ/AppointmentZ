@@ -2,7 +2,6 @@ package com.intelligentz.appointmentz.controllers;
 
 import com.intelligentz.appointmentz.database.connectToDB;
 import com.intelligentz.appointmentz.model.Button;
-import com.intelligentz.appointmentz.model.Hospital;
 import com.mysql.jdbc.Connection;
 
 import java.sql.PreparedStatement;
@@ -24,7 +23,7 @@ public class ButtonController {
             SQL1 = "SELECT * FROM appointmentz.button WHERE serial = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, serial);
-            ResultSet rs = preparedStmt.executeQuery(SQL1);
+            ResultSet rs = preparedStmt.executeQuery();
             if (rs.next()) {
                 String auth = rs.getString("auth");
                 String doctor_id = rs.getString("doctor_id");

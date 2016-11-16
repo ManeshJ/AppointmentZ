@@ -1,6 +1,9 @@
 package com.intelligentz.appointmentz.controllers;
 
+import com.intelligentz.appointmentz.constants.RpiPinConstants;
 import com.intelligentz.appointmentz.database.connectToDB;
+import com.intelligentz.appointmentz.exception.IdeabizException;
+import com.intelligentz.appointmentz.handler.RpiHandler;
 import com.intelligentz.appointmentz.model.Button;
 import com.intelligentz.appointmentz.model.Doctor;
 import com.intelligentz.appointmentz.model.Room;
@@ -31,7 +34,7 @@ public class SessionController {
         return session;
     }
 
-    public Session getCurrentSessionOfDoctor(Doctor doctor) throws ClassNotFoundException, SQLException {
+    private Session getCurrentSessionOfDoctor(Doctor doctor) throws ClassNotFoundException, SQLException {
         Session session = null;
         con = new connectToDB();
         if(con.connect()) {
@@ -46,7 +49,7 @@ public class SessionController {
             SQL1 = "SELECT * FROM appointmentz.session WHERE doctor_id = ? AND `date` = '"+dateRep+"' AND start_time < '"+timeRep+"' ORDER BY start_time DESC LIMIT 1";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, doctor.getDoctor_id());
-            ResultSet rs = preparedStmt.executeQuery(SQL1);
+            ResultSet rs = preparedStmt.executeQuery();
             if (rs.next()) {
                 String session_id = rs.getString("session_id");
                 String room_id = rs.getString("room_id");
@@ -54,7 +57,7 @@ public class SessionController {
                 int current_no = rs.getInt("current_no");
                 Room room = new RoomController().getRoom(room_id);
                 Rpi rpi = new RpiController().getRpiOfRoom(room.getRoom_id());
-                ArrayList<SessonCustomer> sessonCustomers = new SessionCustomerController().getSessionCustomers(session_id,current_no);
+                ArrayList<SessonCustomer> sessonCustomers = new SessionCustomerController().getSessionCustomers(session_id,current_no+1);
                 session = new Session(session_id,doctor,room,current_no,dateRep,start_time,rpi,sessonCustomers);
             }
             connection.close();
@@ -62,7 +65,30 @@ public class SessionController {
         return session;
     }
 
-    public void updateCurrentNumber(String session_id, int newNumber) throws ClassNotFoundException, SQLException {
+    public int getCurrentSessionIdOfRoom(String room_id) throws ClassNotFoundException, SQLException {
+        int current_no = 0;
+        con = new connectToDB();
+        if(con.connect()) {
+            Connection connection = con.getConnection();
+            Class.forName("com.mysql.jdbc.Driver");
+            String SQL1;
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat df2 = new SimpleDateFormat("HH:mm:ss");
+            Date dateobj = new Date();
+            String dateRep = df.format(dateobj);
+            String timeRep = df2.format(dateobj);
+            SQL1 = "SELECT * FROM appointmentz.session WHERE room_id = ? AND `date` = '"+dateRep+"' AND start_time < '"+timeRep+"' ORDER BY start_time DESC LIMIT 1";
+            PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
+            preparedStmt.setString(1, room_id);
+            ResultSet rs = preparedStmt.executeQuery();
+            if (rs.next()) {
+                current_no = rs.getInt("current_no");
+            }
+            connection.close();
+        }
+        return current_no;
+    }
+    private void updateCurrentNumber(String session_id, int newNumber) throws ClassNotFoundException, SQLException {
         con = new connectToDB();
         if(con.connect()) {
             Connection connection = con.getConnection();
@@ -76,5 +102,20 @@ public class SessionController {
             connection.close();
         }
     }
+
+
+    public void increaseSessionNumber(Session session) throws SQLException, ClassNotFoundException, IdeabizException {
+        updateCurrentNumber(session.getSession_id(),session.getCurrent_no()+1);
+        new RpiHandler().updateRpiPin(session.getRpi().getSerial(),session.getRpi().getAuth(), RpiPinConstants.INTURRUPT_PIN, RpiPinConstants.ACTION_ON);
+        new SMSController().sendSMS(session);
+    }
+    public void decreaseSessionNumber(String sessionId, int currentNumber) throws SQLException, ClassNotFoundException {
+        updateCurrentNumber(sessionId,currentNumber-1);
+    }
+    public void resetSessionNumber(String sessionId) throws SQLException, ClassNotFoundException {
+        updateCurrentNumber(sessionId,0);
+    }
+
+
 
 }

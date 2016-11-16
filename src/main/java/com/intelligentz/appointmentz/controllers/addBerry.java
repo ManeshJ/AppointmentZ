@@ -46,7 +46,7 @@ public class addBerry extends HttpServlet{
                     preparedStmt.setString (3, serial);
                 // execute the preparedstatement
                 preparedStmt.execute();
-                
+
                 SQL = "select * from appointmentz.rpi"; 
                 ResultSet rs = stmt.executeQuery(SQL);
                 

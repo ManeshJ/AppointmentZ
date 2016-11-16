@@ -24,7 +24,7 @@ public class HospitalController {
             SQL1 = "SELECT hospital_name FROM appointmentz.hospital WHERE hospital_id = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, hospitalId);
-            ResultSet rs = preparedStmt.executeQuery(SQL1);
+            ResultSet rs = preparedStmt.executeQuery();
             if (rs.next()) {
                 String hospital_name = rs.getString("hospital_name");
                 hospital = new Hospital(hospitalId,hospital_name);

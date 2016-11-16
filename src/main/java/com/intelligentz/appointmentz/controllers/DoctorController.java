@@ -26,7 +26,7 @@ public class DoctorController {
             SQL1 = "SELECT * FROM appointmentz.doctor WHERE doctor_id = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
             preparedStmt.setString(1, doctorId);
-            ResultSet rs = preparedStmt.executeQuery(SQL1);
+            ResultSet rs = preparedStmt.executeQuery();
             if (rs.next()) {
                 String doctor_id = rs.getString("doctor_id");
                 String hospital_id = rs.getString("hospital_id");

@@ -27,7 +27,7 @@ public class SessionCustomerController {
             preparedStmt.setString(1, sessionId);
             preparedStmt.setInt(2, currentNumer);
             preparedStmt.setInt(3, currentNumer + 5);
-            ResultSet rs = preparedStmt.executeQuery(SQL1);
+            ResultSet rs = preparedStmt.executeQuery();
             while (rs.next()) {
                 String mobile = rs.getString("mobile");
                 int appointment_num = rs.getInt("appointment_num");
