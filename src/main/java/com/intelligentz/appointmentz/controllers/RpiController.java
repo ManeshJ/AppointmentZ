@@ -1,15 +1,15 @@
 package com.intelligentz.appointmentz.controllers;
 
+import com.intelligentz.appointmentz.constants.RpiPinConstants;
 import com.intelligentz.appointmentz.database.connectToDB;
-import com.intelligentz.appointmentz.model.Button;
+import com.intelligentz.appointmentz.exception.IdeabizException;
+import com.intelligentz.appointmentz.handler.RpiHandler;
 import com.intelligentz.appointmentz.model.Rpi;
-import com.intelligentz.appointmentz.model.Session;
 import com.mysql.jdbc.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * Created by lakshan on 11/16/16.
@@ -52,9 +52,15 @@ public class RpiController {
 //        }
         String room_id = getRpiRoomId(serial);
         SessionController sessionController = new SessionController();
-        return sessionController.getCurrentSessionIdOfRoom(room_id);
+        return sessionController.getCurrentNumberOfRoom(room_id);
     }
 
+    public void setRpiCurrentNumber(String serial, int newNumber) throws SQLException, ClassNotFoundException, IdeabizException {
+        String room_id = getRpiRoomId(serial);
+        Rpi rpi = getRpiOfRoom(room_id);
+        new SessionController().setCurrentNumberOfRoom(room_id,newNumber);
+        new RpiHandler().updateRpiPin(rpi.getSerial(),rpi.getAuth(), RpiPinConstants.INTURRUPT_PIN, RpiPinConstants.ACTION_ON);
+    }
     private String getRpiRoomId(String serial) throws ClassNotFoundException, SQLException {
         String room_id = null;
         con = new connectToDB();

@@ -63,4 +63,19 @@ public class ButtonResource {
         return Response.status(Response.Status.OK).entity(current_no).build();
     }
 
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    @Path("/reset/{serial}")
+    public String pollget(@PathParam("serial") String serial) {
+        try {
+            new RpiController().setRpiCurrentNumber(serial,0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IdeabizException e) {
+            e.printStackTrace();
+        }
+        return "reset";
+    }
 }

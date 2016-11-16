@@ -65,7 +65,7 @@ public class SessionController {
         return session;
     }
 
-    public int getCurrentSessionIdOfRoom(String room_id) throws ClassNotFoundException, SQLException {
+    public int getCurrentNumberOfRoom(String room_id) throws ClassNotFoundException, SQLException {
         int current_no = 0;
         con = new connectToDB();
         if(con.connect()) {
@@ -88,6 +88,31 @@ public class SessionController {
         }
         return current_no;
     }
+
+    public void setCurrentNumberOfRoom(String room_id, int newNumber) throws ClassNotFoundException, SQLException {
+        String session_id = null;
+        con = new connectToDB();
+        if(con.connect()) {
+            Connection connection = con.getConnection();
+            Class.forName("com.mysql.jdbc.Driver");
+            String SQL1;
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat df2 = new SimpleDateFormat("HH:mm:ss");
+            Date dateobj = new Date();
+            String dateRep = df.format(dateobj);
+            String timeRep = df2.format(dateobj);
+            SQL1 = "SELECT * FROM appointmentz.session WHERE room_id = ? AND `date` = '"+dateRep+"' AND start_time < '"+timeRep+"' ORDER BY start_time DESC LIMIT 1";
+            PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
+            preparedStmt.setString(1, room_id);
+            ResultSet rs = preparedStmt.executeQuery();
+            if (rs.next()) {
+                session_id = rs.getString("session_id");
+            }
+            connection.close();
+            updateCurrentNumber(session_id,newNumber);
+        }
+    }
+
     private void updateCurrentNumber(String session_id, int newNumber) throws ClassNotFoundException, SQLException {
         con = new connectToDB();
         if(con.connect()) {
@@ -111,9 +136,6 @@ public class SessionController {
     }
     public void decreaseSessionNumber(String sessionId, int currentNumber) throws SQLException, ClassNotFoundException {
         updateCurrentNumber(sessionId,currentNumber-1);
-    }
-    public void resetSessionNumber(String sessionId) throws SQLException, ClassNotFoundException {
-        updateCurrentNumber(sessionId,0);
     }
 
 
