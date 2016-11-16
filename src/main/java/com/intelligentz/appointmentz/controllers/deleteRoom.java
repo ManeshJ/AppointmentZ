@@ -39,14 +39,14 @@ public class deleteRoom extends HttpServlet{
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( ); 
                 String SQL,SQL1;
-                SQL1 = "delete from appointmentz.room where room_id=?";
+                SQL1 = "delete from db_bro.room where room_id=?";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
                     preparedStmt.setString (1, room_id);
                       
                 // execute the preparedstatement
                 preparedStmt.execute();
                 
-                SQL = "select * from appointmentz.room"; 
+                SQL = "select * from db_bro.room";
                 ResultSet rs = stmt.executeQuery(SQL);
                 
                 if(rs.wasNull()){

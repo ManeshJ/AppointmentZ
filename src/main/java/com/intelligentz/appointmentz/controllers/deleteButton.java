@@ -39,14 +39,14 @@ public class deleteButton extends HttpServlet{
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( ); 
                 String SQL,SQL1;
-                SQL1 = "delete from appointmentz.button where serial=?";
+                SQL1 = "delete from db_bro.button where serial=?";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
                     preparedStmt.setString (1, serial);
                       
                 // execute the preparedstatement
                 preparedStmt.execute();
                 
-                SQL = "select * from appointmentz.button"; 
+                SQL = "select * from db_bro.button";
                 ResultSet rs = stmt.executeQuery(SQL);
                 
                 if(rs.wasNull()){

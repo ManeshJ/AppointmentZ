@@ -96,10 +96,10 @@ public class ButtonResource {
         return "reset";
     }
 
-    @Produces(MediaType.APPLICATION_JSON)
-    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @POST
     @Path("/yesButton")
-    public void pollget() {
+    public void decrease(String request) {
         String serial = "00000000bca6972a";
         try {
             new RpiController().decreaseRpiCurrentNumber(serial);

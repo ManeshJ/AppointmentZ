@@ -85,7 +85,7 @@
                                                                     if(con.connect()){
                                                                         Connection connection = con.getConnection();
                                                                         Statement stmt = connection.createStatement( );
-                                                                        String SQL = "select * from appointmentz.room";
+                                                                        String SQL = "select * from db_bro.room";
                                                                         ResultSet rs = stmt.executeQuery( SQL );
 
                                                                         while(rs.next( )){
@@ -134,7 +134,7 @@
                                                                     if(con.connect()){
                                                                         Connection connection = con.getConnection();
                                                                         Statement stmt = connection.createStatement( );
-                                                                        String SQL = "select * from appointmentz.doctor";
+                                                                        String SQL = "select * from db_bro.doctor";
                                                                         ResultSet rs = stmt.executeQuery( SQL );
 
                                                                         while(rs.next( )){
@@ -185,7 +185,7 @@
                                                                     if(con.connect()){
                                                                         Connection connection = con.getConnection();
                                                                         Statement stmt = connection.createStatement( );
-                                                                        String SQL = "select * from appointmentz.rpi natural join appointmentz.room";
+                                                                        String SQL = "select * from db_bro.rpi natural join db_bro.room";
                                                                         ResultSet rs = stmt.executeQuery( SQL );
 
                                                                         while(rs.next( )){
@@ -242,7 +242,7 @@
                                                                     if(con.connect()){
                                                                         Connection connection = con.getConnection();
                                                                         Statement stmt = connection.createStatement( );
-                                                                        String SQL = "select * from appointmentz.button natural join appointmentz.doctor";
+                                                                        String SQL = "select * from db_bro.button natural join db_bro.doctor";
                                                                         ResultSet rs = stmt.executeQuery( SQL );
 
                                                                         while(rs.next( )){

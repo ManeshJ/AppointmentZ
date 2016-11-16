@@ -150,16 +150,7 @@
         <servlet-name>deleteSession</servlet-name>
         <url-pattern>/deleteSession</url-pattern>
     </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>addSession</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.addSession</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>addSession</servlet-name>
-        <url-pattern>/addSession</url-pattern>
-    </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>updateSession</servlet-name>
         <servlet-class>com.intelligentz.appointmentz.controllers.updateSession</servlet-class>

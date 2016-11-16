@@ -113,7 +113,7 @@ public class addSession extends HttpServlet{
                     fi.write( file ) ;
                     Files.lines(Paths.get(filePath)).forEach((line) -> {
                         String[] cust = line.split(",");
-                        sessonCustomers.add(new SessonCustomer(cust[0], Integer.parseInt(cust[1])));
+                        sessonCustomers.add(new SessonCustomer(cust[0].trim(), Integer.parseInt(cust[1].trim())));
                     });
                 }else{
                     if (fi.getFieldName().equals("room_id")) room_id = fi.getString();

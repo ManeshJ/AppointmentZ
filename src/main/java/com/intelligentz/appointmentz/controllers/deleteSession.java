@@ -43,7 +43,7 @@ public class deleteSession extends HttpServlet{
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( );
                 String SQL,SQL1;
-                SQL1 = "delete from appointmentz.session where session_id = ?";
+                SQL1 = "delete from db_bro.session where session_id = ?";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
                     preparedStmt.setString (1, session_id);
                     
@@ -52,7 +52,7 @@ public class deleteSession extends HttpServlet{
                 // execute the preparedstatement
                 preparedStmt.execute();
                 
-                SQL = "select * from appointmentz.session"; 
+                SQL = "select * from db_bro.session";
                 ResultSet rs = stmt.executeQuery(SQL);
                 
                 if(rs.wasNull()){
