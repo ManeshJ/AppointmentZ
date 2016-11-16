@@ -47,8 +47,12 @@
             <div style="position:absolute; right:30px; top:20px;">
                 <button class="btn btn-primary dropdown-toggle" data-target="#demo" data-toggle="collapse" style='color:white'><% out.println(session.getAttribute("hospital_name")); %>
                         </button>
+                        <button class="btn btn-primary" style='color:white' onClick="window.location.assign('home.jsp')">Home
+                </button>
                 <div id="demo" class="collapse">
-                <a href="#">Logout</a>
+                <form action="./logout" method="post">
+                        <input class="btn btn-primary" style="color:red" type="submit" value="Logout" />
+                    </form>
                 </div>
             </div>
             <div class="inner-bg" style="padding-top: 10px">

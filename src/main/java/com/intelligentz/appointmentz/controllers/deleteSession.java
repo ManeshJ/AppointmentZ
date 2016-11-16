@@ -25,14 +25,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ndine
  */
-public class updateSession extends HttpServlet{  
+public class deleteSession extends HttpServlet{  
     connectToDB con;
     
     @Override
     public void doPost(HttpServletRequest req,HttpServletResponse res)  throws ServletException,IOException  
     {  
         try {
-            String room_id = req.getParameter("room_id");
+            //String room_id = req.getParameter("room_id");
             //String doctor_id = req.getParameter("doctor_id");
             //String start_time = req.getParameter("start_time");
             //String date_picked = req.getParameter("date_picked");
@@ -43,17 +43,16 @@ public class updateSession extends HttpServlet{
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( );
                 String SQL,SQL1;
-                SQL1 = "update db_bro.session set room_id = ? where session_id = ?";
+                SQL1 = "delete from appointmentz.session where session_id = ?";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
-                    preparedStmt.setString (2, session_id);
-                    preparedStmt.setString (1, room_id);
+                    preparedStmt.setString (1, session_id);
                     
                     
 
                 // execute the preparedstatement
                 preparedStmt.execute();
                 
-                SQL = "select * from db_bro.session";
+                SQL = "select * from appointmentz.session"; 
                 ResultSet rs = stmt.executeQuery(SQL);
                 
                 if(rs.wasNull()){
@@ -65,30 +64,20 @@ public class updateSession extends HttpServlet{
                     String db_session_id = rs.getString("session_id");
                     //String db_date_picked = rs.getString("date");
                     //String db_start_time = rs.getString("start_time");
-                    String db_room_id = rs.getString("room_id");
                         
-                    if((session_id == null ? db_session_id == null : session_id.equals(db_session_id)) && (room_id == null ? db_room_id == null : room_id.equals(db_room_id)) ){
+                    if((session_id == null ? db_session_id == null : session_id.equals(db_session_id))){
                         check=true;
                         //displayMessage(res,"Authentication Success!");
-                        
-                            try {
-                                connection.close();
-                            } catch (SQLException e) { 
-                                displayMessage(res,"SQLException");
-                            }
-                        
-                        res.sendRedirect("./sessions");
-                        
                     }
                 }
                 if(!check){
-                    
                         try {
                             connection.close();
                         } catch (SQLException e) { 
-                            displayMessage(res,"SQLException");
+                            displayMessage(res,"SQLException:"+e);
                         }
-                    displayMessage(res,"SQL query Failed!");
+                    res.sendRedirect("./sessions");
+                    //displayMessage(res,"SQL query Failed!");
                 }
             }
             else{

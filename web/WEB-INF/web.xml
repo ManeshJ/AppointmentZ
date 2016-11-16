@@ -96,6 +96,78 @@
         <servlet-name>addBut</servlet-name>
         <url-pattern>/addBut</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>deleteButton</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.deleteButton</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteButton</servlet-name>
+        <url-pattern>/deleteButton</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>deleteRPI</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.deleteRPI</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteRPI</servlet-name>
+        <url-pattern>/deleteRPI</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteDoctor</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.deleteDoctor</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteDoctor</servlet-name>
+        <url-pattern>/deleteDoctor</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>deleteRoom</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.deleteRoom</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteRoom</servlet-name>
+        <url-pattern>/deleteRoom</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.logout</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>deleteSession</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.deleteSession</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteSession</servlet-name>
+        <url-pattern>/deleteSession</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>addSession</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.addSession</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addSession</servlet-name>
+        <url-pattern>/addSession</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>updateSession</servlet-name>
+        <servlet-class>com.intelligentz.appointmentz.controllers.updateSession</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateSession</servlet-name>
+        <url-pattern>/updateSession</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>addButton.jsp</servlet-name>
@@ -147,6 +219,25 @@
         <servlet-name>sessions.jsp</servlet-name>
         <url-pattern>/sessions</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>edit.jsp</servlet-name>
+        <jsp-file>/edit.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>edit.jsp</servlet-name>
+        <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>equipments.jsp</servlet-name>
+        <jsp-file>/equipments.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>equipments.jsp</servlet-name>
+        <url-pattern>/equipments</url-pattern>
+    </servlet-mapping>
+    
     <servlet-mapping>
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/UploadServlet</url-pattern>

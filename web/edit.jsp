@@ -49,16 +49,26 @@
 
         <!-- Top content -->
         <div class="top-content">
-        	
+            <div style="position:absolute; right:30px; top:20px;">
+                <button class="btn btn-primary dropdown-toggle" data-target="#demo" data-toggle="collapse" style='color:white'><% out.println(session.getAttribute("hospital_name")); %>
+                        </button>
+                        <button class="btn btn-primary" style='color:white' onClick="window.location.assign('sessions.jsp')">Sessions
+                </button>
+                <div id="demo" class="collapse">
+                <form action="./logout" method="post">
+                        <input class="btn btn-primary" style="color:red" type="submit" value="Logout" />
+                    </form>
+                </div>
+            </div>
             <div class="inner-bg">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
-                            <h1><strong>APPointmentZ</strong> SessionId</h1>
+                            <h1><strong>APPointmentZ</strong> Update Session</h1>
                             <div class="description">
-                            	<p>
+                            	<!--<p>
 	                            	Why wait in queues. Do something you like. We will notify you. <a href=""><strong>APPointmentZ.lk</strong></a>, Join with us
-                            	</p>
+                            	</p>-->
                             </div>
                         </div>
                     </div>
@@ -75,7 +85,7 @@
 			                    <form role="form" action="./updateSession" method="post" class="login-form">
 			                    	<div class="form-group">
 										<div class="dropdown">
-											<select class="selectpicker" name="room_id" style="width:145px; height:50px;" readonly>
+											<select class="selectpicker" id='room_id' name="room_id" style="width:145px; height:50px;" readonly>
 											  <%
                                                                                                 try 
                                                                                                 {
@@ -109,7 +119,7 @@
                                                                                                 }
                                                                                                     %>
 											</select>
-											<button type="submit" class="btn" style="width:200px; background-color:gray;" disabled> Maped Doctor and Counter</button>
+											<button type="submit" class="btn" style="width:200px; background-color:gray;" disabled> Update Room of Doctor</button>
 											<select class="selectpicker" style="width:145px; height:50px;">
 											  <option><%=request.getParameter("name")%></option>
 											</select>
@@ -144,13 +154,10 @@
 										</div>
 										<center>
                                                                                     
-                                                                                    <button class="btn" type="submit" style="width:100px" onClick="confirm('Do you wish to update the counter');">Change</button>
+                                                                                    <button class="btn" type="submit" style="width:100px" onClick="return confirm('Do you wish to update the room from: '.concat('<%=request.getParameter("room_number")%>',' -> to: ',''+document.getElementById('room_id').options[document.getElementById('room_id').selectedIndex].text));">Change</button>
 										</center>
 			                        </div>
                         			</form>
-                                                                                        <form action="sessions.jsp">
-                                                                                        <button type="input" class="btn" style="width:100px" >Back</button>
-                                                                                    </form>
                         		</div>
                             </div>
 			                        </div>

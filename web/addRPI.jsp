@@ -44,16 +44,26 @@
 
         <!-- Top content -->
         <div class="top-content">
-        	
+            <div style="position:absolute; right:30px; top:20px;">
+                <button class="btn btn-primary dropdown-toggle" data-target="#demo" data-toggle="collapse" style='color:white'><% out.println(session.getAttribute("hospital_name")); %>
+                        </button>
+                        <button class="btn btn-primary" style='color:white' onClick="window.location.assign('home.jsp')">Home
+                </button>
+                <div id="demo" class="collapse">
+                <form action="./logout" method="post">
+                        <input class="btn btn-primary" style="color:red" type="submit" value="Logout" />
+                    </form>
+                </div>
+            </div>
             <div class="inner-bg">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
                             <h1><strong>APPointmentZ</strong> Add RPI</h1>
                             <div class="description">
-                            	<p>
+                            	<!--<p>
 	                            	Why wait in queues. Do something you like. We will notify you. <a href=""><strong>APPointmentZ.lk</strong></a>, Join with us
-                            	</p>
+                            	</p>-->
                             </div>
                         </div>
                     </div>
@@ -63,9 +73,6 @@
                         		<div class="form-top-left">
                         			<h3>Use this form to add RPI</h3>
                             		<p>Enter the information of RPI to subscribe to the service:</p>
-                        		</div>
-                        		<div class="form-top-right">
-                        			
                         		</div>
                             </div>
                             <div class="form-bottom">

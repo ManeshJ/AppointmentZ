@@ -44,15 +44,27 @@
 
         <!-- Top content -->
         <div class="top-content">
+            <div style="position:absolute; right:30px; top:20px;">
+                <button class="btn btn-primary dropdown-toggle" data-target="#demo" data-toggle="collapse" style='color:white'><% out.println(session.getAttribute("hospital_name")); %>
+                        </button>
+                        <button class="btn btn-primary" style='color:white' onClick="window.location.assign('home.jsp')">Home
+                </button>
+                <div id="demo" class="collapse">
+                <form action="./logout" method="post">
+                        <input class="btn btn-primary" style="color:red" type="submit" value="Logout" />
+                    </form>
+                </div>
+            </div>
             <div class="inner-bg">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
                             <h1><strong>APPointmentZ</strong></h1>
                             <div class="description">
-                            	<p>
+                            	<!--<p>
 	                            	Why wait in queues. Do something you like. We will notify you. <a href=""><strong>APPointmentZ.lk</strong></a>, Join with us
-                            	</p>
+                            	</p>-->
+                                <p>Information about Sessions</p>
                             </div>
                         </div>
                     </div>
@@ -62,9 +74,12 @@
 								<tr>
 									<th>Session Id</th>
 									<th>Doctor</th>
-									<th>Counter</th>
+									<th>Doctor Id</th>
+									<th>Room Number</th>
+									<th>Room Id</th>
 									<th>Date</th>
 									<th>Start Time</th>
+									<th></th>
 									<th></th>
 								</tr>
                                                                 <%
@@ -91,15 +106,22 @@
                                                                             out.println("<td>"+session_id+"</td>");
                                                                             out.println("<input type='hidden' name='session_id' value='"+session_id+"'>");
                                                                             out.println("<td>"+name+"</td>");
+                                                                            out.println("<td>"+doctor_id+"</td>");
                                                                             out.println("<input type='hidden' name='doctor_id' value='"+doctor_id+"'>");
                                                                             out.println("<input type='hidden' name='name' value='"+name+"'>");
                                                                             out.println("<td>"+room_number+"</td>");
+                                                                            out.println("<td>"+room_id+"</td>");
                                                                             out.println("<input type='hidden' name='room_id' value='"+room_id+"'>");
+                                                                            out.println("<input type='hidden' name='room_number' value='"+room_number+"'>");
                                                                             out.println("<td>"+date+"</td>");
                                                                             out.println("<input type='hidden' name='date' value='"+date+"'>");
                                                                             out.println("<td>"+start_time+"</td>");
                                                                             out.println("<input type='hidden' name='start_time' value='"+start_time+"'>");
                                                                             out.println("<td><button type=\"submit\" style='color:red'>edit</button></td>");
+                                                                            out.println("</form>");
+                                                                            out.println("<form action='./deleteSession' method='post'>");
+                                                                            out.println("<td><button type=\"submit\" style='color:red' onClick=\"return confirm('Do you wish to delete the session. Ref: SessionId = "+session_id+" ');\">delete</button></td>");
+                                                                            out.println("<input type='hidden' name='session_id' value='"+session_id+"'>");
                                                                             out.println("</form>");
                                                                             out.println("</tr>");
                                                                         }

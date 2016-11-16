@@ -50,7 +50,15 @@
 
         <!-- Top content -->
         <div class="top-content">
-        	
+            <div style="position:absolute; right:30px; top:20px;">
+                <button class="btn btn-primary dropdown-toggle" data-target="#demo" data-toggle="collapse" style='color:white'><% out.println(session.getAttribute("hospital_name")); %>
+                        </button>
+                        <button class="btn btn-primary" style='color:white' onClick="window.location.assign('home.jsp')">Home
+                </button>
+                <div id="demo" class="collapse">
+                <a href="#">Logout</a>
+                </div>
+            </div>
             <div class="inner-bg">
                 <div class="container">
                     <div class="row">
