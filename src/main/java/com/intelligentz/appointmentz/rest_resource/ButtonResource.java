@@ -79,8 +79,8 @@ public class ButtonResource {
         return "reset";
     }
 
-    @Produces(MediaType.APPLICATION_JSON)
-    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @POST
     @Path("/reset")
     public String pollget2() {
         String serial = "00000000bca6972a";

@@ -79,6 +79,7 @@
 									<th>Room Id</th>
 									<th>Date</th>
 									<th>Start Time</th>
+									<th>Current No</th>
 									<th></th>
 									<th></th>
 								</tr>
@@ -101,6 +102,7 @@
                                                                             String room_number = rs.getString("room_number");
                                                                             String doctor_id = rs.getString("doctor_id");
                                                                             String name = rs.getString("name");
+                                                                            String current_no = rs.getString("current_no");
                                                                             out.println("<tr>");
                                                                             out.println("<form action='./edit' method='post'>");
                                                                             out.println("<td>"+session_id+"</td>");
@@ -117,6 +119,8 @@
                                                                             out.println("<input type='hidden' name='date' value='"+date+"'>");
                                                                             out.println("<td>"+start_time+"</td>");
                                                                             out.println("<input type='hidden' name='start_time' value='"+start_time+"'>");
+                                                                            out.println("<td>"+current_no+"</td>");
+                                                                            out.println("<input type='hidden' name='current_no' value='"+current_no+"'>");
                                                                             out.println("<td><button type=\"submit\" style='color:red'>edit</button></td>");
                                                                             out.println("</form>");
                                                                             out.println("<form action='./deleteSession' method='post'>");

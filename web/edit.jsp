@@ -150,11 +150,17 @@
                                                                                         <button class="btn" style="width:200px; background-color:green;" disabled> <%=request.getParameter("session_id") %></button>
 											</center>
 											</div>
+                                            <div>
+                                                <center>
+                                                    <p style="color:white">Current No:</p>
+                                                    <input type="text" class="form-username form-control" style="width:200px; text-align: center;" id="current_no" name="current_no" value="<%=request.getParameter("current_no") %>">
+                                                </center>
+                                            </div>
 								
 										</div>
 										<center>
                                                                                     
-                                                                                    <button class="btn" type="submit" style="width:100px" onClick="return confirm('Do you wish to update the room from: '.concat('<%=request.getParameter("room_number")%>',' -> to: ',''+document.getElementById('room_id').options[document.getElementById('room_id').selectedIndex].text));">Change</button>
+                                                                                    <button class="btn" type="submit" style="width:100px" onClick="return confirm('Do you wish to update the \nroom from: '.concat('<%=request.getParameter("room_number")%>',' -> to: ',''+document.getElementById('room_id').options[document.getElementById('room_id').selectedIndex].text,'\ncurrent no- from: ','<%=request.getParameter("current_no")%>',' -> to: ',''+document.getElementById('current_no').value));">Change</button>
 										</center>
 			                        </div>
                         			</form>

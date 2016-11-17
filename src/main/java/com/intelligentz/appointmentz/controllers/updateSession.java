@@ -5,7 +5,11 @@
  */
 package com.intelligentz.appointmentz.controllers;
 
+import com.intelligentz.appointmentz.constants.RpiPinConstants;
 import com.intelligentz.appointmentz.database.connectToDB;
+import com.intelligentz.appointmentz.exception.IdeabizException;
+import com.intelligentz.appointmentz.handler.RpiHandler;
+import com.intelligentz.appointmentz.model.Rpi;
 import com.mysql.jdbc.Connection;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,17 +41,19 @@ public class updateSession extends HttpServlet{
             //String start_time = req.getParameter("start_time");
             //String date_picked = req.getParameter("date_picked");
             String session_id = req.getParameter("session_id");
+            String current_no = req.getParameter("current_no");
             con = new connectToDB();
             if(con.connect()){
                 Connection  connection = con.getConnection();
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( );
                 String SQL,SQL1;
-                SQL1 = "update db_bro.session set room_id = ? where session_id = ?";
+                SQL1 = "update db_bro.session set current_no = ? ,room_id = ? where session_id = ?";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
-                    preparedStmt.setString (2, session_id);
-                    preparedStmt.setString (1, room_id);
-                    
+                    preparedStmt.setString (3, session_id);
+                    preparedStmt.setString (2, room_id);
+                    preparedStmt.setString (1, current_no);
+
                     
 
                 // execute the preparedstatement
@@ -70,8 +76,9 @@ public class updateSession extends HttpServlet{
                     if((session_id == null ? db_session_id == null : session_id.equals(db_session_id)) && (room_id == null ? db_room_id == null : room_id.equals(db_room_id)) ){
                         check=true;
                         //displayMessage(res,"Authentication Success!");
-                        
-                            try {
+                        Rpi rpi = new RpiController().getRpiOfRoom(room_id);
+                        new RpiHandler().updateRpiPin(rpi.getSerial(),rpi.getAuth(), RpiPinConstants.INTURRUPT_PIN, RpiPinConstants.ACTION_ON);
+                        try {
                                 connection.close();
                             } catch (SQLException e) { 
                                 displayMessage(res,"SQLException");
@@ -96,6 +103,8 @@ public class updateSession extends HttpServlet{
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(authenticate.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IdeabizException e) {
+            displayMessage(res,"Databse Updated. Couldn't Connect to the Display");
         }
     }
     public void displayMessage (HttpServletResponse res,String s) throws IOException{

@@ -64,7 +64,7 @@ public class authenticate extends HttpServlet{
                             connection.close();
                         } catch (SQLException e) { /* ignored */}
                     }
-                    displayMessage(res,"Authentication Failed!"+password);
+                    displayMessage(res,"Authentication Failed!");
                 }
             }
             else{
