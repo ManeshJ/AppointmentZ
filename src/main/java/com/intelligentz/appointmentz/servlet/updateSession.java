@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.intelligentz.appointmentz.controllers;
+package com.intelligentz.appointmentz.servlet;
 
 import com.intelligentz.appointmentz.constants.RpiPinConstants;
+import com.intelligentz.appointmentz.controllers.RpiController;
 import com.intelligentz.appointmentz.database.connectToDB;
 import com.intelligentz.appointmentz.exception.IdeabizException;
 import com.intelligentz.appointmentz.handler.RpiHandler;

@@ -3,17 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.intelligentz.appointmentz.controllers;
-
+package com.intelligentz.appointmentz.servlet;
 
 import com.intelligentz.appointmentz.database.connectToDB;
 import com.mysql.jdbc.Connection;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
@@ -31,29 +24,31 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ndine
  */
-public class addR extends HttpServlet{  
+public class addBut extends HttpServlet{  
     connectToDB con;
     @Override
     public void doPost(HttpServletRequest req,HttpServletResponse res)  throws ServletException,IOException  
     {  
         try {
-            String room_number = req.getParameter("room_number");
-            String hospital_id = req.getParameter("hospital_id");
+            String doctor_id = req.getParameter("doctor_id");
+            String auth = req.getParameter("auth");
+            String serial = req.getParameter("serial");
             con = new connectToDB();
             if(con.connect()){
-                Connection connection = con.getConnection();
+                Connection  connection = con.getConnection();
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( ); 
                 String SQL,SQL1;
-                SQL1 = "insert into db_bro.room ( hospital_id, room_number) VALUES (?,?)";
+                SQL1 = "insert into db_bro.button ( doctor_id, auth, serial) VALUES (?,?,?)";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
-                    preparedStmt.setString (1, hospital_id);
-                    preparedStmt.setString (2, room_number);
+                    preparedStmt.setString (1, doctor_id);
+                    preparedStmt.setString (2, auth);
+                    preparedStmt.setString (3, serial);
 
                 // execute the preparedstatement
                 preparedStmt.execute();
                 
-                SQL = "select * from db_bro.room";
+                SQL = "select * from db_bro.button";
                 ResultSet rs = stmt.executeQuery(SQL);
                 
                 if(rs.wasNull()){
@@ -62,10 +57,11 @@ public class addR extends HttpServlet{
                 boolean check = false;
                 while ( rs.next( ) ) {
                     
-                    String db_hospital_id = rs.getString("hospital_id");
-                    String db_room_number = rs.getString("room_number");
+                    String db_auth = rs.getString("auth");
+                    String db_serial = rs.getString("serial");
+                    String db_doctor_id = rs.getString("doctor_id");
                         
-                    if((hospital_id == null ? db_hospital_id == null : hospital_id.equals(db_hospital_id)) && (room_number == null ? db_room_number == null : room_number.equals(db_room_number))){
+                    if((auth == null ? db_auth == null : auth.equals(db_auth)) && (doctor_id == null ? db_doctor_id == null : doctor_id.equals(db_doctor_id)) && (serial == null ? db_serial == null : serial.equals(db_serial))){
                         check=true;
                         //displayMessage(res,"Authentication Success!");
                         
@@ -119,4 +115,3 @@ public class addR extends HttpServlet{
         pw.close();//closing the stream
     }
 }  
-

@@ -29,7 +29,7 @@
     </servlet>
     <servlet>
         <servlet-name>auth</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.authenticate</servlet-class>
+        <servlet-class>com.intelligentz.appointmentz.servlet.authenticate</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -55,7 +55,7 @@
 
     <servlet>
         <servlet-name>addDoc</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.addDoc</servlet-class>
+        <servlet-class>com.intelligentz.appointmentz.servlet.addDoc</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addDoc</servlet-name>
@@ -64,7 +64,7 @@
 
     <servlet>
         <servlet-name>addSession</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.addSession</servlet-class>
+        <servlet-class>com.intelligentz.appointmentz.servlet.addSession</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addSession</servlet-name>
@@ -72,7 +72,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>addBerry</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.addBerry</servlet-class>
+        <servlet-class>com.intelligentz.appointmentz.servlet.addBerry</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addBerry</servlet-name>
@@ -81,7 +81,7 @@
 
     <servlet>
         <servlet-name>addR</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.addR</servlet-class>
+        <servlet-class>com.intelligentz.appointmentz.servlet.addR</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addR</servlet-name>
@@ -90,7 +90,7 @@
 
     <servlet>
         <servlet-name>addBut</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.addBut</servlet-class>
+        <servlet-class>com.intelligentz.appointmentz.servlet.addBut</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addBut</servlet-name>
@@ -99,7 +99,7 @@
     
     <servlet>
         <servlet-name>deleteButton</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.deleteButton</servlet-class>
+        <servlet-class>com.intelligentz.appointmentz.servlet.deleteButton</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteButton</servlet-name>
@@ -108,7 +108,7 @@
     
     <servlet>
         <servlet-name>deleteRPI</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.deleteRPI</servlet-class>
+        <servlet-class>com.intelligentz.appointmentz.servlet.deleteRPI</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteRPI</servlet-name>
@@ -117,7 +117,7 @@
 
     <servlet>
         <servlet-name>deleteDoctor</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.deleteDoctor</servlet-class>
+        <servlet-class>com.intelligentz.appointmentz.servlet.deleteDoctor</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteDoctor</servlet-name>
@@ -126,7 +126,7 @@
     
     <servlet>
         <servlet-name>deleteRoom</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.deleteRoom</servlet-class>
+        <servlet-class>com.intelligentz.appointmentz.servlet.deleteRoom</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteRoom</servlet-name>
@@ -135,7 +135,7 @@
     
     <servlet>
         <servlet-name>logout</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.logout</servlet-class>
+        <servlet-class>com.intelligentz.appointmentz.servlet.logout</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>logout</servlet-name>
@@ -144,7 +144,7 @@
     
     <servlet>
         <servlet-name>deleteSession</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.deleteSession</servlet-class>
+        <servlet-class>com.intelligentz.appointmentz.servlet.deleteSession</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteSession</servlet-name>
@@ -153,7 +153,7 @@
 
     <servlet>
         <servlet-name>updateSession</servlet-name>
-        <servlet-class>com.intelligentz.appointmentz.controllers.updateSession</servlet-class>
+        <servlet-class>com.intelligentz.appointmentz.servlet.updateSession</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>updateSession</servlet-name>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.intelligentz.appointmentz.controllers;
+package com.intelligentz.appointmentz.servlet;
 
 import com.mysql.jdbc.Connection;
 import com.intelligentz.appointmentz.database.connectToDB;

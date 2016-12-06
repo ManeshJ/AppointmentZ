@@ -3,13 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.intelligentz.appointmentz.controllers;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.intelligentz.appointmentz.servlet;
+
 
 import com.intelligentz.appointmentz.database.connectToDB;
 import com.mysql.jdbc.Connection;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-//import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,34 +31,29 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ndine
  */
-public class deleteSession extends HttpServlet{  
+public class addR extends HttpServlet{  
     connectToDB con;
-    
     @Override
     public void doPost(HttpServletRequest req,HttpServletResponse res)  throws ServletException,IOException  
     {  
         try {
-            //String room_id = req.getParameter("room_id");
-            //String doctor_id = req.getParameter("doctor_id");
-            //String start_time = req.getParameter("start_time");
-            //String date_picked = req.getParameter("date_picked");
-            String session_id = req.getParameter("session_id");
+            String room_number = req.getParameter("room_number");
+            String hospital_id = req.getParameter("hospital_id");
             con = new connectToDB();
             if(con.connect()){
-                Connection  connection = con.getConnection();
+                Connection connection = con.getConnection();
                 Class.forName("com.mysql.jdbc.Driver");
-                Statement stmt = connection.createStatement( );
+                Statement stmt = connection.createStatement( ); 
                 String SQL,SQL1;
-                SQL1 = "delete from db_bro.session where session_id = ?";
+                SQL1 = "insert into db_bro.room ( hospital_id, room_number) VALUES (?,?)";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
-                    preparedStmt.setString (1, session_id);
-                    
-                    
+                    preparedStmt.setString (1, hospital_id);
+                    preparedStmt.setString (2, room_number);
 
                 // execute the preparedstatement
                 preparedStmt.execute();
                 
-                SQL = "select * from db_bro.session";
+                SQL = "select * from db_bro.room";
                 ResultSet rs = stmt.executeQuery(SQL);
                 
                 if(rs.wasNull()){
@@ -61,28 +62,48 @@ public class deleteSession extends HttpServlet{
                 boolean check = false;
                 while ( rs.next( ) ) {
                     
-                    String db_session_id = rs.getString("session_id");
-                    //String db_date_picked = rs.getString("date");
-                    //String db_start_time = rs.getString("start_time");
+                    String db_hospital_id = rs.getString("hospital_id");
+                    String db_room_number = rs.getString("room_number");
                         
-                    if((session_id == null ? db_session_id == null : session_id.equals(db_session_id))){
+                    if((hospital_id == null ? db_hospital_id == null : hospital_id.equals(db_hospital_id)) && (room_number == null ? db_room_number == null : room_number.equals(db_room_number))){
                         check=true;
                         //displayMessage(res,"Authentication Success!");
+                        
+                            try {
+                                connection.close();
+                            } catch (SQLException e) { 
+                                displayMessage(res,"SQLException");
+                            }
+                        
+                        res.sendRedirect("./home");
+                        
                     }
                 }
                 if(!check){
+                    
                         try {
                             connection.close();
                         } catch (SQLException e) { 
-                            displayMessage(res,"SQLException:"+e);
+                            displayMessage(res,"SQLException");
                         }
-                    res.sendRedirect("./sessions");
-                    //displayMessage(res,"SQL query Failed!");
+                    displayMessage(res,"SQL query Failed!");
                 }
             }
             else{
                 con.showErrormessage(res);
             }
+            
+            
+            /*res.setContentType("text/html");//setting the content type
+            PrintWriter pw=res.getWriter();//get the stream to write the data
+            
+            //writing html in the stream
+            pw.println("<html><body>");
+            pw.println("Welcome to servlet: "+username);
+            pw.println("</body></html>");
+            
+            pw.close();//closing the stream
+            */
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(authenticate.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -98,3 +119,4 @@ public class deleteSession extends HttpServlet{
         pw.close();//closing the stream
     }
 }  
+

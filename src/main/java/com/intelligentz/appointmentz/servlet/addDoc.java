@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.intelligentz.appointmentz.controllers;
+package com.intelligentz.appointmentz.servlet;
 
-import com.mysql.jdbc.Connection;
 import com.intelligentz.appointmentz.database.connectToDB;
+import com.mysql.jdbc.Connection;
 import java.io.IOException;
 import java.io.PrintWriter;
-//import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,24 +24,25 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ndine
  */
-public class deleteDoctor extends HttpServlet{  
+public class addDoc extends HttpServlet{  
     connectToDB con;
-    
     @Override
     public void doPost(HttpServletRequest req,HttpServletResponse res)  throws ServletException,IOException  
     {  
         try {
-            String doctor_id = req.getParameter("doctor_id");
+            String doctor_name = req.getParameter("doctor_name");
+            String hospital_id = req.getParameter("hospital_id");
             con = new connectToDB();
             if(con.connect()){
                 Connection  connection = con.getConnection();
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( ); 
                 String SQL,SQL1;
-                SQL1 = "delete from db_bro.doctor where doctor_id=?";
+                SQL1 = "insert into db_bro.doctor ( hospital_id, name) VALUES (?,?)";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
-                    preparedStmt.setString (1, doctor_id);
-                      
+                    preparedStmt.setString (1, hospital_id);
+                    preparedStmt.setString (2, doctor_name);
+
                 // execute the preparedstatement
                 preparedStmt.execute();
                 
@@ -50,27 +50,36 @@ public class deleteDoctor extends HttpServlet{
                 ResultSet rs = stmt.executeQuery(SQL);
                 
                 if(rs.wasNull()){
-                    displayMessage(res,"response is null");
+                    displayMessage(res,"response in null");
                 }
                 boolean check = false;
                 while ( rs.next( ) ) {
                     
-                    String db_doctor_id = rs.getString("doctor_id");
+                    String db_hospital_id = rs.getString("hospital_id");
+                    String db_doctor_name = rs.getString("name");
                         
-                    if((doctor_id == null ? db_doctor_id == null : doctor_id.equals(db_doctor_id))){
-                        displayMessage(res,"Delete action failed!!!");
+                    if((hospital_id == null ? db_hospital_id == null : hospital_id.equals(db_hospital_id)) && (doctor_name == null ? db_doctor_name == null : doctor_name.equals(db_doctor_name))){
                         check=true;
-                    } 
+                        //displayMessage(res,"Authentication Success!");
+                        
+                            try {
+                                connection.close();
+                            } catch (SQLException e) { 
+                                displayMessage(res,"SQLException");
+                            }
+                        
+                        res.sendRedirect("./home");
+                        
+                    }
                 }
                 if(!check){
                     
                         try {
                             connection.close();
                         } catch (SQLException e) { 
-                            displayMessage(res,"SQLException: "+e);
+                            displayMessage(res,"SQLException");
                         }
-                        res.sendRedirect("./equipments");
-                    //displayMessage(res,"SQL query Failed!");
+                    displayMessage(res,"SQL query Failed!");
                 }
             }
             else{

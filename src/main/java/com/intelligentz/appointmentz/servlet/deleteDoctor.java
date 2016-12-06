@@ -3,68 +3,74 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.intelligentz.appointmentz.controllers;
-import com.intelligentz.appointmentz.database.connectToDB;
+package com.intelligentz.appointmentz.servlet;
+
 import com.mysql.jdbc.Connection;
-import javax.servlet.http.*;  
-import javax.servlet.*;  
-import java.io.*;
+import com.intelligentz.appointmentz.database.connectToDB;
+import java.io.IOException;
+import java.io.PrintWriter;
+//import java.util.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  *
  * @author ndine
  */
-public class authenticate extends HttpServlet{  
+public class deleteDoctor extends HttpServlet{  
     connectToDB con;
+    
     @Override
     public void doPost(HttpServletRequest req,HttpServletResponse res)  throws ServletException,IOException  
     {  
         try {
-            String username = req.getParameter("form-username");
-            String password = req.getParameter("form-password");
+            String doctor_id = req.getParameter("doctor_id");
             con = new connectToDB();
             if(con.connect()){
                 Connection  connection = con.getConnection();
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( ); 
-                String SQL;
-                SQL = "select * from db_bro.hospital";
-                 //WHERE hospital_id=\""+username+"\" AND password=\""+password+"\"";
+                String SQL,SQL1;
+                SQL1 = "delete from db_bro.doctor where doctor_id=?";
+                PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
+                    preparedStmt.setString (1, doctor_id);
+                      
+                // execute the preparedstatement
+                preparedStmt.execute();
+                
+                SQL = "select * from db_bro.doctor";
                 ResultSet rs = stmt.executeQuery(SQL);
+                
                 if(rs.wasNull()){
-                    displayMessage(res,"response in null");
+                    displayMessage(res,"response is null");
                 }
                 boolean check = false;
                 while ( rs.next( ) ) {
-                    String db_username = rs.getString("hospital_id");
-                    String db_password = rs.getString("password");
-                    String db_hospital_name = rs.getString("hospital_name");
-                    if((username == null ? db_username == null : username.equals(db_username)) && (password == null ? db_password == null : password.equals(db_password))){
+                    
+                    String db_doctor_id = rs.getString("doctor_id");
+                        
+                    if((doctor_id == null ? db_doctor_id == null : doctor_id.equals(db_doctor_id))){
+                        displayMessage(res,"Delete action failed!!!");
                         check=true;
-                        //displayMessage(res,"Authentication Success!");
-                        try{
-                                connection.close();
-                            } catch (SQLException e) { /* ignored */}
-                        
-                        HttpSession session = req.getSession();
-                        session.setAttribute( "hospital_id", db_username );
-                        session.setAttribute( "hospital_name", db_hospital_name);
-                        
-                        res.sendRedirect("./home");
-                        
-                    }
+                    } 
                 }
                 if(!check){
-                    if (connection != null) {
+                    
                         try {
                             connection.close();
-                        } catch (SQLException e) { /* ignored */}
-                    }
-                    displayMessage(res,"Authentication Failed!");
+                        } catch (SQLException e) { 
+                            displayMessage(res,"SQLException: "+e);
+                        }
+                        res.sendRedirect("./equipments");
+                    //displayMessage(res,"SQL query Failed!");
                 }
             }
             else{
@@ -82,9 +88,7 @@ public class authenticate extends HttpServlet{
             
             pw.close();//closing the stream
             */
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(authenticate.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(authenticate.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -1,10 +1,11 @@
 package com.intelligentz.appointmentz.controllers;
 
-import com.intelligentz.appointmentz.database.connectToDB;
-import com.intelligentz.appointmentz.model.Doctor;
+import com.intelligentz.appointmentz.database.DBConnection;
 import com.intelligentz.appointmentz.model.Hospital;
-import com.mysql.jdbc.Connection;
-
+import org.apache.commons.dbutils.DbUtils;
+import java.beans.PropertyVetoException;
+import java.io.IOException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,23 +14,28 @@ import java.sql.SQLException;
  * Created by lakshan on 11/16/16.
  */
 public class HospitalController {
-    connectToDB con;
-    public Hospital getHospital(String hospitalId) throws ClassNotFoundException, SQLException {
+    Connection connection;
+    ResultSet resultSet;
+    PreparedStatement preparedStatement;
+
+    public Hospital getHospitalById(String hospitalId) throws ClassNotFoundException, SQLException, IOException, PropertyVetoException {
         Hospital hospital = null;
-        con = new connectToDB();
-        if(con.connect()) {
-            Connection connection = con.getConnection();
-            Class.forName("com.mysql.jdbc.Driver");
-            String SQL1;
-            SQL1 = "SELECT hospital_name FROM db_bro.hospital WHERE hospital_id = ?";
-            PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
-            preparedStmt.setString(1, hospitalId);
-            ResultSet rs = preparedStmt.executeQuery();
-            if (rs.next()) {
-                String hospital_name = rs.getString("hospital_name");
+        try {
+            connection = DBConnection.getDBConnection().getConnection();
+            String SQL1 = "SELECT hospital_name FROM db_bro.hospital WHERE hospital_id = ?";
+            preparedStatement = connection.prepareStatement(SQL1);
+            preparedStatement.setString(1, hospitalId);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String hospital_name = resultSet.getString("hospital_name");
                 hospital = new Hospital(hospitalId,hospital_name);
             }
-            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(preparedStatement);
+            DbUtils.closeQuietly(connection);
         }
         return hospital;
     }

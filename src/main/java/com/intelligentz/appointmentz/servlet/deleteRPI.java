@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.intelligentz.appointmentz.controllers;
+package com.intelligentz.appointmentz.servlet;
 
-import com.intelligentz.appointmentz.database.connectToDB;
 import com.mysql.jdbc.Connection;
+import com.intelligentz.appointmentz.database.connectToDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+//import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,14 +25,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ndine
  */
-public class addBut extends HttpServlet{  
+public class deleteRPI extends HttpServlet{  
     connectToDB con;
+    
     @Override
     public void doPost(HttpServletRequest req,HttpServletResponse res)  throws ServletException,IOException  
     {  
         try {
-            String doctor_id = req.getParameter("doctor_id");
-            String auth = req.getParameter("auth");
             String serial = req.getParameter("serial");
             con = new connectToDB();
             if(con.connect()){
@@ -39,50 +39,38 @@ public class addBut extends HttpServlet{
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt = connection.createStatement( ); 
                 String SQL,SQL1;
-                SQL1 = "insert into db_bro.button ( doctor_id, auth, serial) VALUES (?,?,?)";
+                SQL1 = "delete from db_bro.rpi where serial=?";
                 PreparedStatement preparedStmt = connection.prepareStatement(SQL1);
-                    preparedStmt.setString (1, doctor_id);
-                    preparedStmt.setString (2, auth);
-                    preparedStmt.setString (3, serial);
-
+                    preparedStmt.setString (1, serial);
+                      
                 // execute the preparedstatement
                 preparedStmt.execute();
                 
-                SQL = "select * from db_bro.button";
+                SQL = "select * from db_bro.rpi";
                 ResultSet rs = stmt.executeQuery(SQL);
                 
                 if(rs.wasNull()){
-                    displayMessage(res,"response in null");
+                    displayMessage(res,"response is null");
                 }
                 boolean check = false;
                 while ( rs.next( ) ) {
                     
-                    String db_auth = rs.getString("auth");
                     String db_serial = rs.getString("serial");
-                    String db_doctor_id = rs.getString("doctor_id");
                         
-                    if((auth == null ? db_auth == null : auth.equals(db_auth)) && (doctor_id == null ? db_doctor_id == null : doctor_id.equals(db_doctor_id)) && (serial == null ? db_serial == null : serial.equals(db_serial))){
+                    if((serial == null ? db_serial == null : serial.equals(db_serial))){
+                        displayMessage(res,"Delete action failed!!!");
                         check=true;
-                        //displayMessage(res,"Authentication Success!");
-                        
-                            try {
-                                connection.close();
-                            } catch (SQLException e) { 
-                                displayMessage(res,"SQLException");
-                            }
-                        
-                        res.sendRedirect("./home");
-                        
-                    }
+                    } 
                 }
                 if(!check){
                     
                         try {
                             connection.close();
                         } catch (SQLException e) { 
-                            displayMessage(res,"SQLException");
+                            displayMessage(res,"SQLException: "+e);
                         }
-                    displayMessage(res,"SQL query Failed!");
+                        res.sendRedirect("./equipments");
+                    //displayMessage(res,"SQL query Failed!");
                 }
             }
             else{
